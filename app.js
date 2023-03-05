@@ -1,85 +1,50 @@
-let computerSelection;
-let playerSelection;
-let computerScore = 0;
-let playerScore = 0;
-
-const myArray = ['Rock', 'Paper', 'Scissors'];
-
-function computerPlay() {
-    return myArray[~~(Math.random() * myArray.length)];
-}
-
-function playRound(playerSelection, computerSelection) {
-    computerSelection = computerPlay().toLowerCase();
-    playerSelection = playerSelection.toLowerCase();
-    if (computerSelection == playerSelection) {
-        displayResults("Tie game!");
-    }   else if (
-        (computerSelection == "rock" && playerSelection == "scissors") ||
-        (computerSelection == "scissors" && playerSelection == "paper") ||
-        (computerSelection == "paper" && playerSelection == "rock")
-      ) {
-        computerScore = ++computerScore;
-        keepCPUscore();
-        if (computerScore === 1) {
-            displayResults(
-                `Oh no! You lost.
-                ${capitalize(computerSelecton)} beats ${playerSelection}.`
-            );
-        }
-} else if (computerScore === 2) {
-    displayResults(
-      `Arghh. ${capitalize(
-        computerSelection
-      )} beats ${playerSelection}. Give it another shot!`
-    );
-  } else if (computerScore === 3) {
-    displayResults(
-      `${capitalize(
-        computerSelection
-      )} beats ${playerSelection}. It's ok. You got this!!`
-    );
-  } else if (computerScore === 4) {
-    displayResults(
-      `Oh no. It's match point!! ${capitalize(
-        computerSelection
-      )} beats ${playerSelection}. Don't let us down!`
-    );
-  } else {
-    displayResults(`${computerSelection} beats ${playerSelection}`);
+const selectionButtons = document.querySelectorAll('[data-selection]');
+const SELECTIONS = [
+  {
+    name: 'rock',
+    emoji: '🤟',
+    beats: 'scissors'
+  },
+  {
+    name: 'paper',
+    emoji: '📝',
+    beats: 'rock'
+  },
+  {
+    name: 'scissors',
+    emoji: '✂️',
+    beats: 'paper'
   }
-} else {
-  playerScore = ++playerScore;
-  keepPlayerScore();
-  if (playerScore === 1) {
-    displayResults(
-      `Lets go!!! You won.
-      ${capitalize(playerSelection)} beats ${computerSelection}.`
-    );
-  } else if (playerScore === 2) {
-    displayResults(
-      `You're pretty good at this. ${capitalize(
-        playerSelection
-      )} beats ${computerSelection}.`
-    );
-  } else if (playerScore === 3) {
-    displayResults(
-      `${capitalize(
-        playerSelection
-      )} beats ${computerSelection}! Has mankind found its savior??`
-    );
-  } else if (playerScore === 4) {
-    displayResults(
-      `${capitalize(
-        playerSelection
-      )} beats ${computerSelection}. One more and you're a hero!`
-    );
-  } else {
-    displayResults(`${playerSelection} beats ${computerSelection}`);
-        } 
-    }
+]
+
+  selectionButtons.forEach(selectionButtons => {
+    selectionButtons.addEventListener('click', e => {
+        const selectionName = selectionButtons.dataset.selection
+        const selection = SELECTIONS.find(selection => selection.name === selectionName)
+        makeSelection(selection)
+    });
+});
+
+function makeSelection(selection) {
+  const computerSelection =randomSelection()
+  const yourWinner = isWinner(selection, computerSelection)
+  const computerWinner = isWinner(computerSelection, selection)
+  console.log(computerSelection)
+  addSelectionResult(computerSelection, computerWinner)
+  addSelectionResult(selection, yourWinner)
 }
 
-function capitalize(str) {
-return str.charAt(0).toUpperCase() + str.slice(1);
+function addSelectionResult(selection, winner) {
+
 }
+
+function isWinner(selection, opponentSelection) {
+  return selection.beats === opponentSelection.name
+}
+
+function randomSelection() {
+  const randomIndex = Math.floor(Math.random() * SELECTIONS.length)
+  return SELECTIONS[randomIndex]
+}
+
+// 16:49
