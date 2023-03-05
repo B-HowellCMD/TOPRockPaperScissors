@@ -1,0 +1,56 @@
+body {
+    background: #7c7b7b;
+    color: #000000;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+}
+
+.selections {
+    display: flex;
+    justify-content: center;
+    /* border-bottom: 15px ridge #f06f0f;
+    border-radius: 10px;
+    padding-bottom: 5px; */
+}
+
+/* PLayer options,buttons 🤟📝✂️ */
+.selection {
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 3.25rem;
+    padding: 0 10px;
+    margin: auto;
+    transition: 100ms;
+}
+
+.selection:hover {
+    transform: scale(1.2);
+}
+
+.results  {
+    margin-top: 3rem;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(2, 1fr);
+    font-size: 2rem;
+    font-weight: 300;
+    justify-items: center;
+    align-items: center;
+}
+
+.result-score {
+    margin-left: 0.5rem;
+    font-size: 1rem;
+}
+
+.result-selection {
+    opacity: 0.5;
+    font-size: 1.5rem;
+}
+
+.result-selection.winner {
+    opacity: 1;
+    font-size: 2.9rem;
+}
