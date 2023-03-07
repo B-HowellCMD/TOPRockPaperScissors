@@ -1,4 +1,8 @@
 const selectionButtons = document.querySelectorAll('[data-selection]');
+const finalColumn = document.querySelector('[data-final-column]')
+const computerScoreSpan = document.querySelector('[data-computer-score]')
+const yourScoreSpan = document.querySelector('[data-your-score]')
+// Array of objects (rock, paper, scissors)
 const SELECTIONS = [
   {
     name: 'rock',
@@ -17,6 +21,7 @@ const SELECTIONS = [
   }
 ]
 
+// Logic for the buttons
   selectionButtons.forEach(selectionButtons => {
     selectionButtons.addEventListener('click', e => {
         const selectionName = selectionButtons.dataset.selection
@@ -26,16 +31,32 @@ const SELECTIONS = [
 });
 
 function makeSelection(selection) {
-  const computerSelection =randomSelection()
+  const computerSelection = randomSelection()
   const yourWinner = isWinner(selection, computerSelection)
   const computerWinner = isWinner(computerSelection, selection)
-  console.log(computerSelection)
+  
+  // console.log(computerSelection)
+  
   addSelectionResult(computerSelection, computerWinner)
   addSelectionResult(selection, yourWinner)
+
+  // increments the score
+  if (yourWinner) incrementScore(yourScoreSpan)
+  if (computerWinner) incrementScore(computerScoreSpan)
 }
 
-function addSelectionResult(selection, winner) {
+// increments the score
+function incrementScore(scoreSpan) {
+  scoreSpan.innerText = parseInt(scoreSpan.innerText) + 1
+}
 
+// adds the selection to the DOM
+function addSelectionResult(selection, winner) {
+  const div = document.createElement('div')
+  div.innerText = selection.emoji
+  div.classList.add('result-selection')
+  if (winner) div.classList.add('winner')
+  finalColumn.after(div)
 }
 
 function isWinner(selection, opponentSelection) {
@@ -47,4 +68,3 @@ function randomSelection() {
   return SELECTIONS[randomIndex]
 }
 
-// 16:49
